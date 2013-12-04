@@ -1,3 +1,6 @@
+/*
+* Colorpicker initialisation
+*/
 var lineColor = "";
 
 $('#picker').colpick({
@@ -11,13 +14,15 @@ $('#picker').colpick({
 	}
 });
 
+/*
+* Map initialisation
+*/
 var firstClick = false;
-var prevDot = "";
-
+var lastX = 0;
+var lastY = 0;
 var paper = new Raphael(0, 10, 800, 800);
-var allMap = paper.rect(0, 0, 800, 800);
+var allMap = paper.rect(0, 0, 800, 800, 5);
 allMap.attr(1, "#fff");
-
 var dots = paper.set();
 
 for (var i=0; i < 32; i++) {
@@ -28,13 +33,33 @@ for (var i=0; i < 32; i++) {
         dots.push(dot);
     }
 }
+dots.attr( { fill : "black" } ); // changes the fill of all dots
 
-dots.attr( {fill : "black"} ); // changes the fill of all dots
-
+/*
+* Functions
+*/
 function onDotClick() {
-    console.log(this.data("id") + " " + firstClick);
-	if(!firstClick) {
-		//TODO: Draw line to	
+    console.log(this.data("id") + "POS:"+lastX+":"+lastY);
+	if(firstClick) {
+		var firstPosX = lastX;
+		var firstPosY = lastY;
+		var secondPosX = this.data("xpos");
+		var secondPosY = this.data("ypos");
+		var lineString = "M"+firstPosX+" "+firstPosY+"L"+secondPosX+" "+secondPosY;
+		var line = paper.path(lineString);
+		line.attr(1, "#"+lineColor);
+		lastX = this.data("xpos");
+		lastY = this.data("ypos");
+	} else {
+		firstClick = !firstClick;
+		lastX = this.data("xpos");
+		lastY = this.data("ypos");
 	}
-    firstClick = !firstClick;
 }
+
+/*
+* Events
+*/
+$("#newLineBtn").click(function(){
+	firstClick = false;
+});

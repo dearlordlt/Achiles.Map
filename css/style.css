@@ -19,3 +19,9 @@ body {
 	left:820px;
 	top:10px;
 }
+
+.tool {
+	border-style:dotted;
+	border-width:thin;
+	margin:5px;
+}
