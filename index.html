@@ -17,7 +17,37 @@
     <body>
 		<div id="tools">
 			<div id="picker"></div>
-			<div class="tool"><input id="newLineBtn" type="button" value="new line" /></div>
+			<div class="tool"><input id="newLineBtn" type="button" value="new line" /><input id="undoLineBtn" type="button" value="undo last line" /></div>
+			<div class="tool">
+				<label for="lineWidth">Line width:</label>
+				<select id="lineWidth">
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+				</select>
+			</div>
+			<div class="tool">
+				<label for="lineStyle">Line style:</label>
+				<select id="lineStyle">
+					<option value="0">default</option>
+					<option value="1">-</option>
+					<option value="2">.</option>
+					<option value="3">-.</option>
+					<option value="4">-..</option>
+					<option value="5">. </option>
+					<option value="6">- </option>
+					<option value="7">--</option>
+					<option value="8">- .</option>
+					<option value="9">--.</option>
+					<option value="10">--..</option>
+				</select>
+			</div>
+			<div class="tool">
+				<label for="label">Label:</label>
+				<input id="label" value="" autocomplete="off" />
+			</div>
 		</div>
 		
         <script src="js/script.js"></script>

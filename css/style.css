@@ -16,7 +16,7 @@ body {
 
 #tools {
 	position:absolute;
-	left:820px;
+	left:830px;
 	top:10px;
 }
 
@@ -24,4 +24,5 @@ body {
 	border-style:dotted;
 	border-width:thin;
 	margin:5px;
+	padding:5px;
 }
