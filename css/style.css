@@ -1,11 +1,21 @@
 html, body {
     width: 100%;
     height: 100%;
-    margin: 0;
+    margin: 10;
 }
 
 body {
     background-color: transparent;
     -webkit-transform: perspective(1400px) matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
     -webkit-transform-style: preserve-3d;
+}
+
+.short_input {
+	width:40px;
+}
+
+#tools {
+	position:absolute;
+	left:820px;
+	top:10px;
 }
