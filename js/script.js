@@ -1,7 +1,7 @@
 /*
 * Colorpicker initialisation
 */
-var lineColor = "";
+var lineColor = "000000";
 
 $('#picker').colpick({
 	flat : true,
@@ -17,6 +17,7 @@ $('#picker').colpick({
 /*
 * Map initialisation
 */
+var lines = Array();
 var firstClick = false;
 var lastX = 0;
 var lastY = 0;
@@ -39,21 +40,19 @@ dots.attr( { fill : "black" } ); // changes the fill of all dots
 * Functions
 */
 function onDotClick() {
-    console.log(this.data("id") + "POS:"+lastX+":"+lastY);
+    console.log(this.data("id") + "POS:"+lastX+":"+lastY + " Line color:" + lineColor);
 	if(firstClick) {
 		var firstPosX = lastX;
 		var firstPosY = lastY;
 		var secondPosX = this.data("xpos");
 		var secondPosY = this.data("ypos");
 		var lineString = "M"+firstPosX+" "+firstPosY+"L"+secondPosX+" "+secondPosY;
-		var line = paper.path(lineString);
-		line.attr(1, "#"+lineColor);
-		lastX = this.data("xpos");
-		lastY = this.data("ypos");
+		var line = paper.path(lineString).attr({stroke:'#'+lineColor});;
+		lastX = this.data("xpos"); lastY = this.data("ypos");
+		lines.push(line);
 	} else {
 		firstClick = !firstClick;
-		lastX = this.data("xpos");
-		lastY = this.data("ypos");
+		lastX = this.data("xpos"); lastY = this.data("ypos");
 	}
 }
 
