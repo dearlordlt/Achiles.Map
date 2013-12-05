@@ -25,6 +25,8 @@ var allMap = paper.rect(0, 0, 820, 820, 5);
 var which_line_to_remove = -1;
 var lines = [];
 var lastDotClicked;
+var isDeleting = false;
+var bigestUndeletableItemId = 0;
 allMap.attr(1, "#fff");
 
 var rects = paper.set();
@@ -44,6 +46,7 @@ for (var i=0; i < 33; i++) {
         var dot = paper.circle(i*25+10, j*25+10, 7);
         dot.data( { id : i+"x"+j, xpos : i*25+10, ypos : j*25+10 } );
         dot.click(onDotClick);
+		bigestUndeletableItemId = dot.id;
         dots.push(dot);
     }
 }
@@ -53,6 +56,7 @@ dots.attr( { fill : "#FFFFFF", stroke : "#CECECE", opacity : 0 } ); // makes all
 * Functions
 */
 function onDotClick() {
+	if(isDeleting) return;
 	if(lastDotClicked != null) lastDotClicked.attr({ fill : "#FFFFFF", stroke : "#CECECE", opacity : 0 });
 	this.attr({ fill : "#8F8F8F", stroke : "#CECECE", opacity : 1 });
 	lastDotClicked = this;
@@ -61,6 +65,9 @@ function onDotClick() {
 		var secondPosX = this.data("xpos"); var secondPosY = this.data("ypos");
 		var lineString = "M"+firstPosX+" "+firstPosY+"L"+secondPosX+" "+secondPosY;
 		var line = paper.path(lineString).attr( { stroke : '#'+lineColor, "stroke-width" : $("#lineWidth").val(), "stroke-dasharray" : styles[$("#lineStyle").val()] } );
+		line.mousedown(function() {
+			if(isDeleting) line.remove();
+		})
 		lastX = this.data("xpos"); lastY = this.data("ypos");
 		lines.push(line.id);
 	} else {
@@ -83,3 +90,11 @@ $("#undoLineBtn").click(function() {
 	firstClick = false;
 	if(lines.length > 0 && lastDotClicked != null) lastDotClicked.attr({ fill : "#FFFFFF", stroke : "#CECECE", opacity : 0 });
 })
+$("#deleteLine").click(function(){
+	isDeleting = !isDeleting;
+	if(isDeleting) {
+		$(this).css('color','red');
+	} else {
+		$(this).css('color','black');
+	}
+});
