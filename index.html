@@ -5,6 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         
 		<link rel="stylesheet" type="text/css" href="css/style.css">
+		
+		<link href='http://fonts.googleapis.com/css?family=Dosis:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         
 		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="js/raphael-min.js"></script>
@@ -16,13 +18,18 @@
     </head>
     <body>
 		<div id="tools">
-			<div id="picker"></div>
-			<div class="tool"><input id="newLineBtn" type="button" value="new line" /><input id="undoLineBtn" type="button" value="undo last line" /></div>
+			<div class="tool">
+				<div id="picker"></div>
+			</div>
+			<div class="tool">
+				<input id="newLineBtn" class="myButton" type="button" value="new line" />
+				<input id="undoLineBtn" class="myButton" type="button" value="undo line" />
+			</div>
 			<div class="tool">
 				<label for="lineWidth">Line width:</label>
 				<select id="lineWidth">
 					<option>1</option>
-					<option>2</option>
+					<option selected>2</option>
 					<option>3</option>
 					<option>4</option>
 					<option>5</option>
@@ -46,11 +53,12 @@
 			</div>
 			<div class="tool">
 				<label for="label">Label:</label>
-				<input id="label" value="" autocomplete="off" />
+				<input class="medium_input" id="label" value="" autocomplete="off" />
+				<input id="placeLabel" type="button" value="place" class="myButton" />
 			</div>
 			<div class="tool">
 				<label for="deleteLine">Delete:</label>
-				<input id="deleteLine" type="button" value="delete line" />
+				<input id="deleteLine" type="button" value="delete line" class="myButton" />
 			</div>
 		</div>
 		

@@ -26,6 +26,7 @@ var which_line_to_remove = -1;
 var lines = [];
 var lastDotClicked;
 var isDeleting = false;
+var isLabel = false;
 var bigestUndeletableItemId = 0;
 allMap.attr(1, "#fff");
 
@@ -56,7 +57,7 @@ dots.attr( { fill : "#FFFFFF", stroke : "#CECECE", opacity : 0 } ); // makes all
 * Functions
 */
 function onDotClick() {
-	if(isDeleting) return;
+	if(isDeleting || isLabel) return;
 	if(lastDotClicked != null) lastDotClicked.attr({ fill : "#FFFFFF", stroke : "#CECECE", opacity : 0 });
 	this.attr({ fill : "#8F8F8F", stroke : "#CECECE", opacity : 1 });
 	lastDotClicked = this;
@@ -81,9 +82,13 @@ function onDotClick() {
 */
 $("#newLineBtn").click(function() {
 	firstClick = false;
+	isLabel = false; isDeleting = false;
+	$("#deleteLine").css('color','white'); $("#placeLabel").css('color','white');
 	if(lastDotClicked != null) lastDotClicked.attr({ fill : "#FFFFFF", stroke : "#CECECE", opacity : 0 });
 });
 $("#undoLineBtn").click(function() {
+	isLabel = false; isDeleting = false;
+	$("#deleteLine").css('color','white'); $("#placeLabel").css('color','white');
 	var lineToRemove = paper.getById(lines[lines.length-1]);
 	lineToRemove.remove();
 	lines.pop();
@@ -92,9 +97,23 @@ $("#undoLineBtn").click(function() {
 })
 $("#deleteLine").click(function(){
 	isDeleting = !isDeleting;
+	isLabel = false;
 	if(isDeleting) {
 		$(this).css('color','red');
+		$("#placeLabel").css('color','white');
 	} else {
 		$(this).css('color','black');
+		$("#placeLabel").css('color','red');
+	}
+});
+$("#placeLabel").click(function() {
+	isLabel = !isLabel;
+	isDeleting = false;
+	if(isLabel) {
+		$(this).css('color','red');
+		$("#deleteLine").css('color','white');
+	} else {
+		$(this).css('color','black');
+		$("#deleteLine").css('color','red');
 	}
 });
