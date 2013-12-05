@@ -57,7 +57,15 @@ dots.attr( { fill : "#FFFFFF", stroke : "#CECECE", opacity : 0 } ); // makes all
 * Functions
 */
 function onDotClick() {
-	if(isDeleting || isLabel) return;
+	if(isLabel && $("#label").val() != "") {
+		var labelText = paper.text(this.data("xpos"), parseInt(this.data("ypos"))-10, $("#label").val());
+		labelText.attr({ fill : '#'+lineColor });
+		line.mousedown(function() {
+			if(isDeleting) labelText.remove();
+		})
+		return;
+	}
+	if(isDeleting) return;
 	if(lastDotClicked != null) lastDotClicked.attr({ fill : "#FFFFFF", stroke : "#CECECE", opacity : 0 });
 	this.attr({ fill : "#8F8F8F", stroke : "#CECECE", opacity : 1 });
 	lastDotClicked = this;
@@ -100,20 +108,11 @@ $("#deleteLine").click(function(){
 	isLabel = false;
 	if(isDeleting) {
 		$(this).css('color','red');
-		$("#placeLabel").css('color','white');
 	} else {
-		$(this).css('color','black');
-		$("#placeLabel").css('color','red');
+		$(this).css('color','white');
 	}
 });
 $("#placeLabel").click(function() {
 	isLabel = !isLabel;
 	isDeleting = false;
-	if(isLabel) {
-		$(this).css('color','red');
-		$("#deleteLine").css('color','white');
-	} else {
-		$(this).css('color','black');
-		$("#deleteLine").css('color','red');
-	}
 });
