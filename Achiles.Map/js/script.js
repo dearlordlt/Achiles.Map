@@ -60,8 +60,9 @@ function onDotClick() {
 	if(isLabel && $("#label").val() != "") {
 		var labelText = paper.text(this.data("xpos"), parseInt(this.data("ypos"))-10, $("#label").val());
 		labelText.attr({ fill : '#'+lineColor });
-		line.mousedown(function() {
-			if(isDeleting) labelText.remove();
+		labelText.mousedown(function() {
+			console.log("text is clicked");
+			if(isDeleting) this.remove();
 		})
 		return;
 	}
