@@ -16,7 +16,6 @@ $('#picker').colpick({
 /*
 * Map initialisation
 */
-var lines = [];
 var styles = ["", "-", ".", "-.", "-..", ". ", "- ", "--", "- .", "--.", "--.."];
 var firstClick = false;
 var lastX = 0;
@@ -24,6 +23,8 @@ var lastY = 0;
 var paper = new Raphael(0, 10, 820, 820);
 var allMap = paper.rect(0, 0, 820, 820, 5);
 var which_line_to_remove = -1;
+var lines = [];
+var lastDotClicked;
 allMap.attr(1, "#fff");
 
 var rects = paper.set();
@@ -52,17 +53,16 @@ dots.attr( { fill : "#FFFFFF", stroke : "#CECECE", opacity : 0 } ); // makes all
 * Functions
 */
 function onDotClick() {
-    console.log(this.data("id") + "POS:"+lastX+":"+lastY + " Line color:" + lineColor);
+	if(lastDotClicked != null) lastDotClicked.attr({ fill : "#FFFFFF", stroke : "#CECECE", opacity : 0 });
+	this.attr({ fill : "#8F8F8F", stroke : "#CECECE", opacity : 1 });
+	lastDotClicked = this;
 	if(firstClick) {
-		var firstPosX = lastX;
-		var firstPosY = lastY;
-		var secondPosX = this.data("xpos");
-		var secondPosY = this.data("ypos");
+		var firstPosX = lastX; var firstPosY = lastY;
+		var secondPosX = this.data("xpos"); var secondPosY = this.data("ypos");
 		var lineString = "M"+firstPosX+" "+firstPosY+"L"+secondPosX+" "+secondPosY;
-		//alert($("#lineStyle").val());
-		var line = paper.path(lineString).attr( { stroke : '#'+lineColor, "stroke-width" : $("#lineWidth").val(), "stroke-dasharray" : styles[$("#lineStyle").val()] ).data('id', (lines.length-1));
+		var line = paper.path(lineString).attr( { stroke : '#'+lineColor, "stroke-width" : $("#lineWidth").val(), "stroke-dasharray" : styles[$("#lineStyle").val()] } );
 		lastX = this.data("xpos"); lastY = this.data("ypos");
-		lines.push(line);
+		lines.push(line.id);
 	} else {
 		firstClick = !firstClick;
 		lastX = this.data("xpos"); lastY = this.data("ypos");
@@ -74,9 +74,12 @@ function onDotClick() {
 */
 $("#newLineBtn").click(function() {
 	firstClick = false;
+	if(lastDotClicked != null) lastDotClicked.attr({ fill : "#FFFFFF", stroke : "#CECECE", opacity : 0 });
 });
 $("#undoLineBtn").click(function() {
-	console.log(lines[lines.length()]);
-	lines[lines.length].remove();
+	var lineToRemove = paper.getById(lines[lines.length-1]);
+	lineToRemove.remove();
 	lines.pop();
+	firstClick = false;
+	if(lines.length > 0 && lastDotClicked != null) lastDotClicked.attr({ fill : "#FFFFFF", stroke : "#CECECE", opacity : 0 });
 })
