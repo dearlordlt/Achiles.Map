@@ -10,10 +10,10 @@ body {
 }
 
 .short_input {
-	width:40px;
+	width:3em;
 }
 .medium_input {
-	width:90px;
+	width:80px;
 }
 
 #tools {
